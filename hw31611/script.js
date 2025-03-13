@@ -31,7 +31,7 @@ const menuLinks = [
   { text: "account", href: "/account" },
 ];
 
-///itereate over the enture menuLinks array and for each "link" object
+///iterate over the enture menuLinks array and for each "link" object
 menuLinks.forEach((link) => {
   // create an <a> element
   const anchor = document.createElement("a");
