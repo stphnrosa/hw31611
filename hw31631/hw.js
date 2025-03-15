@@ -1,3 +1,5 @@
+// references: https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle
+
 // select and cache the <main> element in a variable named mainEl
 const mainEl = document.querySelector("main");
 
@@ -25,21 +27,33 @@ topMenuEl.classList.add("flex-around");
 //////PART 3: ADDING MENU BUTTONS ////////
 
 var menuLinks = [
-  {text: 'about', href: '/about'},
-  {text: 'catalog', href: '#', subLinks: [
-    {text: 'all', href: '/catalog/all'},
-    {text: 'top selling', href: '/catalog/top'},
-    {text: 'search', href: '/catalog/search'},
-  ]},
-  {text: 'orders', href: '#' , subLinks: [
-    {text: 'new', href: '/orders/new'},
-    {text: 'pending', href: '/orders/pending'},
-    {text: 'history', href: '/orders/history'},
-  ]},
-  {text: 'account', href: '#', subLinks: [
-    {text: 'profile', href: '/account/profile'},
-    {text: 'sign out', href: '/account/signout'},
-  ]},
+  { text: "about", href: "/about" },
+  {
+    text: "catalog",
+    href: "#",
+    subLinks: [
+      { text: "all", href: "/catalog/all" },
+      { text: "top selling", href: "/catalog/top" },
+      { text: "search", href: "/catalog/search" },
+    ],
+  },
+  {
+    text: "orders",
+    href: "#",
+    subLinks: [
+      { text: "new", href: "/orders/new" },
+      { text: "pending", href: "/orders/pending" },
+      { text: "history", href: "/orders/history" },
+    ],
+  },
+  {
+    text: "account",
+    href: "#",
+    subLinks: [
+      { text: "profile", href: "/account/profile" },
+      { text: "sign out", href: "/account/signout" },
+    ],
+  },
 ];
 
 ///itereate over the enture menuLinks array and for each "link" object
@@ -47,18 +61,16 @@ menuLinks.forEach((link) => {
   // create an <a> element
   const anchor = document.createElement("a");
   // on the new element add an href attribute with its value set to the href property of the "link"
-  anchor.setAttribute('href', link.href)
+  anchor.setAttribute("href", link.href);
 
-//set the new elements content to the valur of the text propert of the 'link; object.
-anchor.textContent = link.text;
+  //set the new elements content to the valur of the text propert of the 'link; object.
+  anchor.textContent = link.text;
 
-
-topMenuEl.appendChild(anchor);
-
-})
+  topMenuEl.appendChild(anchor);
+});
 
 // Select and cache the <nav id="sub-menu"> element in a variable named subMenuEl.
-const subMenuEl= document.querySelector("#sub-menu");
+const subMenuEl = document.querySelector("#sub-menu");
 
 // Set the height subMenuEl element to be "100%".
 subMenuEl.style.height = "100%";
@@ -69,7 +81,7 @@ subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
 // Add the class of flex-around to the subMenuEl element.
 subMenuEl.classList.add("flex-around");
 
-//Set the CSS position property of subMenuEl to the value of absolute. 
+//Set the CSS position property of subMenuEl to the value of absolute.
 subMenuEl.style.position = "absolute";
 
 //Set the CSS top property of subMenuEl to the value of 0.
@@ -80,25 +92,47 @@ const topMenuLinks = document.querySelectorAll("a");
 
 //Attach a delegated 'click' event listener to topMenuEl.
 
-topMenuEl.addEventListener("click", (event) =>{
-event.preventDefault()
-console.log(event.target.tagName)
-if (event.target.tagName.toLowerCase() !== "a"){
-  return
-}
+topMenuEl.addEventListener("click", (event) => {
+  event.preventDefault();
 
-  console.log(event.target.textContent)
-
-
-})
-
-ToggleEvent = (event) => {
-  event.preventDefault()
-  console.log(event.target.tagName)
-  if (event.target.tagName.toLowerCase() !== "a"){
-    return
+  if (!event.target.matches("a")) {
+    return;
   }
-  
-    console.log(event.target.textContent)
-  
+
+  if (event.target.classList.contains("active")) {
+    event.target.classList.remove("active");
+    return;
   }
+
+topMenuLinks.forEach((link) => {
+  link.classList.remove("active");
+});
+  event.target.classList.add("active");
+
+
+});
+
+//////PART 5: ADDING SUBMENU INTERACTIONS ////////
+
+subMenuEl.addEventListener("click", (event) => {
+  event.preventDefault(); 
+  
+  if (!event.target.matches("a")) {
+    return;
+  }
+
+  if (event.target.classList.toggle("active")) {
+    return;
+  }
+  subMenuLinks.forEach((link) => {
+    link.classList.remove("active");
+  });
+  event.target.classList.add("active");
+
+
+}); 
+
+// set the CSS top property of subMenuEl to 100%.
+subMenuEl.style.top ; "100%";
+ // my submenu section shows up but it's a full bar... not sure why it's not showing up as a dropdown :() 
+
